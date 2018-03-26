@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#ct li{
+    list-style: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+#ct li:hover{
+    background-color: green;
+}
+#load-more{
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    cursor: pointer;
+}
+.btn{
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    width: 80px;
+    border: 1px solid #da6969;
+    border-radius: 3px;
+    text-align: center;
+    text-decoration: none;
+    color: #E27272;
+}
+.btn:hover{
+    background: #3aca46;
+    color: #fff;
+}
+
+作者：饥人谷_李豪
+链接：https://www.jianshu.com/p/6be468236eaa
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

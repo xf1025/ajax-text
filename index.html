@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/main.css">
+    <title>ajax联系</title>
+</head>
+<body>
+    <ul id="ct">
+    </ul>
+    <a herf="#" id="load-more" class="btn">加载更多</a>
+    <script>
+        var btn = document.querySelector('#load-more')
+        var ct = document.querySelector('#ct')
+        var cuIdx = 0;//设置初始加载数据
+        var len = 5; //设置每次的加载数组的总长度
+        var isLoading = false //添加状态锁,初始为false，用于判断是否在加载数据
+            btn.addEventListener('click',function (event) {
+                event.preventDefault() //防止出现 每次点击跳转至顶部的事件
+                if (isLoading) {
+                    return
+                } 
+                isLoading = true
+                ajax('http://127.0.0.1:8081/loadMore',{
+                    idx: cuIdx,
+                    len: len,
+                },function(data){
+                    appendData(data)     //添加5个li
+                    isLoading = false   //数据到来之后解锁,后面就能继续点击
+                    cuIdx = cuIdx + len 
+                })
+             })
+
+             function ajax(url, json, onSuccess, onError){
+                 var xhr = new XMLHttpRequest()
+                 var arr = []
+                 for(key in json){
+                     arr.push(key + '=' + json[key])
+                 }
+                 url += '?' + arr.join('&')
+                 xhr.open('get', url)
+                 xhr.send()
+                 xhr.onload = function (params) {
+                    if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
+                        onSuccess(JSON.parse(this.response))
+                    }else{
+                        onError && onError() 
+                    }
+                 }
+             }
+             function appendData(data){
+                for(var i = 0; i<data.length; i++){
+                    var child = document.createElement('li')  //添加5个li
+                    child.innerText = data[i]  //第一次点击后5个li的文本内容即"新闻0","新闻1","新闻2","新闻3","新闻4"
+                    ct.appendChild(child) 
+                }
+             }
+            
+    </script>
+</body>
+</html>
